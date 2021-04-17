@@ -1,0 +1,126 @@
+{% extends "index.html" %}
+
+{% block main %}
+<main role="main" class="col-md-3 ml-sm-auto col-lg-10 pt-2 px-3">
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+   <li class="breadcrumb-item"><a href="#">{{appename}}</a></li>
+    <li class="breadcrumb-item "><a href="#">{{view}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">change</li>
+  </ol>
+</nav>
+
+<form method="POST">
+    <div class="row justify-content-end">
+      <div class="col-12 col-sm-6 col-md-8">
+
+
+        <table class="table table-striped table-sm">
+          <tbody>            
+            {% for item in itens %}
+              {% if  itens[item].visible  %}
+              <tr>
+                    <th  class="w-25" scope="row">{{itens[item].title}}</th>
+                    <td class="w-50">
+                      {% if  itens[item].type == 'select' %}
+                        <select class="form-control form-control-sm mx-sm-3" name="{{item}}">
+                          {% for choices in itens[item]['values'] %}
+                            {% if  choices in dataset['dataset'][item] %}
+                                <option selected >{{choices}}</option>
+                               {% else %}
+                                <option  >{{choices}}</option>
+                                {% endif %}                           
+                          {% endfor %}
+                        </select>
+                      {% endif %}
+                      {% if  itens[item].type == 'checkbox' %}
+                        {% if  'true' in dataset['dataset'][item] %}
+                       <input class="form-check-input mx-sm-3" type="checkbox"  id="defaultCheck1" name="{{item}}" checked>
+                        {% else %}
+
+                        <input class="form-check-input mx-sm-3" type="checkbox"  id="defaultCheck1" name="{{item}}" >                       
+                       {% endif %}
+                    
+                      {% endif %}
+                    
+                      {% if  itens[item].type == 'text' %}
+                        <input type="{{itens[item].type}}" class="form-control form-control-sm mx-sm-3" id="colFormLabelSm" placeholder="{{itens[item].placeholder}}" value="{{dataset['dataset'][item]}}" name="{{item}}">
+                      {% endif %}
+
+                      {% if  itens[item].type == 'password' %}
+                        <input type="{{itens[item].type}}" class="form-control form-control-sm mx-sm-3" id="colFormLabelSm" placeholder="{{itens[item].placeholder}}" name="{{item}}">
+                      {% endif %}
+
+
+                      {% if  itens[item].type == 'textarea' %}
+
+                        <textarea class="form-control form-control-sm mx-sm-3" id="colFormLabelSm" name="{{item}}" placeholder="{{itens[item].placeholder}}" rows="3">{{dataset['dataset'][item]}}</textarea>
+                      {% endif %}
+
+
+
+                      {% if  itens[item].type == 'multipleselect' %}
+
+                            <select multiple class="form-control form-control-sm mx-sm-3" name="{{item}}" id="exampleFormControlSelect2">
+                           {%- set parts =  dataset['dataset'][item].split(',') %}
+                           {% for choices in itens[item]['values'] %}
+                           
+                              {% if find_string(choices,parts)  %}
+                                <option selected >{{choices}}</option>
+                              {% else %}
+                                <option  >{{choices}}</option>
+                                {% endif %}
+
+                          {% endfor %}
+                          </select>
+
+
+                      {% endif %}
+
+
+                      {% if  itens[item].type == 'file' %}
+                      
+
+                          <input type="{{itens[item].type}}" class="form-control form-control-sm mx-sm-3" id="colFormLabelSm" placeholder="{{itens[item].placeholder}}" name="{{item}}">
+
+                      {% endif %}
+
+                      {% if  itens[item].type == 'datetime' %}
+                          <input class="form-control form-control-sm mx-sm-3" type="{{itens[item].type}}-local"  id="example-datetime-local-input" name="{{item}}"  placeholder="{{itens[item].placeholder}}" value="{{dataset['dataset'][item]}}" >
+
+                      {% endif %}
+
+                      {% if  itens[item].type == 'date' %}
+                          <input class="form-control form-control-sm mx-sm-3" type="{{itens[item].type}}"  id="example-datetime-local-input" name="{{item}}"  placeholder="{{itens[item].placeholder}}" value="{{dataset['dataset'][item]}}" >
+
+                      {% endif %}
+
+
+                      {% if  itens[item].type == 'number' %}
+                          <input class="form-control form-control-sm mx-sm-3" type="{{itens[item].type}}"  id="example-datetime-local-input" name="{{item}}"  placeholder="{{itens[item].placeholder}}" value="{{dataset['dataset'][item]}}" >
+
+                      {% endif %}
+
+                    </td>
+                    <td class="w-25"></td>
+              </tr>
+              {% endif %}
+            {% endfor %}
+            
+          </tbody>
+        </table>
+
+      </div>
+    <div class="col-3 col-md-4  ">    
+      <div class="btn-group-vertical">
+      <button type="submit" class="btn btn-sm btn-outline-secondary btn-sm  btn-lg">  Save  </button>
+      <button type="button" class="btn btn-sm btn-outline-secondary btn-sm  btn-lg">  Save and New  </button>
+    </div>
+    </div>
+
+  </div>
+</form>
+  </main>
+{% endblock %}

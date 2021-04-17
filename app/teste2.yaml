@@ -1,0 +1,34 @@
+appname: "Super" 
+status: True
+views:
+      Users2:
+        template: 'default'
+        columns: 
+            id: [index: true,visible: False, list: False]
+            login: [title: 'Login', sortable: true, width: 100, visible: True, placeholder: 'Insira seu login']
+            password: [title: 'Password',type: 'password', visible: True, placeholder: 'Insira sua Senha']
+            group: [title: 'Group',  placeholder: 'Insira seu grupo', type: 'select', values: !Test2 ]
+            active: [title: 'Ativo', type: 'checkbox', visible: True, list: False]
+        fieldsets:
+            Login: ['login']
+
+        dataset: 
+            GET: 'http://127.0.0.1:5000/users'
+            GET_ID:  'http://127.0.0.1:5000/users/{id}'
+            POST: 'http://127.0.0.1:5000/users'
+            DELETE: 'http://127.0.0.1:5000/users/{id}'
+            PUT: 'http://127.0.0.1:5000/users/{id}'
+      
+      Groups2:
+        template: 'default'
+        columns: 
+          id: [index: true,visible: False, list: False]
+          group: [title: 'Group']
+          active: [title: 'Ativo', type: 'checkbox']
+
+        dataset: 
+            GET: 'http://127.0.0.1:5000/groups'
+            GET_ID:  'http://127.0.0.1:5000/groups/{id}'
+            POST: 'http://127.0.0.1:5000/groups'
+            DELETE: 'http://127.0.0.1:5000/groups/{id}'
+            PUT: 'http://127.0.0.1:5000/groups/{id}'

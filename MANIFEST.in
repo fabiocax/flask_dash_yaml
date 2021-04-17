@@ -1,0 +1,2 @@
+recursive-include flask_dash_yaml/templates/*
+recursive-include  flask_dash_yaml/static/*
